@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="corpo">
+	
+	
+	<h1>Lista de Produtos</h1>
+	<h:messages errorClass="alert alert-danger"
+				infoClass="alert alert-success" />
+	<h:dataTable value="#{produtoBean.lista}" var="p" styleClass="table">
+		<h:column>
+			<f:facet name="header">codigo</f:facet>
+			#{p.codigo}
+		</h:column>
+		<h:column>
+			<f:facet name="header">descricao</f:facet>
+			<h:outputText value="#{p.descricao}" >
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">quantidade</f:facet>
+			#{p.quantidade}
+		</h:column>
+		<h:column>
+			<f:facet name="header">valor</f:facet>
+			#{p.valor}
+		</h:column>
+		<h:column>			
+			<h:form>
+				<h:commandButton styleClass="btn btn-info" action="produto" value="atualizar" >
+					<f:setPropertyActionListener value="#{p}" 
+						target="#{produtoBean.produto}" />
+				</h:commandButton>
+				<h:commandButton style="margin-left:10px;" styleClass="btn btn-danger"
+						action="##{produtoBean.excluir(p.codigo)}" value="#{bundle.btn_remove}" />
+			</h:form>
+		</h:column>
+	</h:dataTable>
+</ui:define>
+</ui:composition> 
+</html>
+
+
+
+

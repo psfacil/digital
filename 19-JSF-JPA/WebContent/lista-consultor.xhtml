@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="corpo">
+	<f:loadBundle basename="br.com.fiap.bundle.consultor" var="bundle"/>
+	
+	<h1>#{bundle.page_title_list}</h1>
+	<h:messages errorClass="alert alert-danger"
+				infoClass="alert alert-success" />
+	<h:dataTable value="#{listaConsultorBean.consultores}" var="c" styleClass="table">
+		<h:column>
+			<f:facet name="header">#{bundle.lbl_name}</f:facet>
+			#{c.nome}
+		</h:column>
+		<h:column>
+			<f:facet name="header">#{bundle.lbl_date}</f:facet>
+			<h:outputText value="#{c.dataNascimento.time}" >
+				<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-3"/>
+			</h:outputText>
+		</h:column>
+		<h:column>
+			<f:facet name="header">#{bundle.lbl_cpf}</f:facet>
+			#{c.cpf}
+		</h:column>
+		<h:column>
+			<f:facet name="header">#{bundle.lbl_phone}</f:facet>
+			#{c.telefone}
+		</h:column>
+		<h:column>			
+			<h:form>
+				<h:commandButton styleClass="btn btn-info" action="consultor" value="#{bundle.btn_update}" >
+					<f:setPropertyActionListener value="#{c}" 
+						target="#{consultorBean.consultor}" />
+				</h:commandButton>
+				<h:commandButton style="margin-left:10px;" styleClass="btn btn-danger"
+						action="#{listaConsultorBean.excluir(c.codigo)}" value="#{bundle.btn_remove}" />
+			</h:form>
+		</h:column>
+	</h:dataTable>
+</ui:define>
+</ui:composition> 
+</html>
+
+
+
+

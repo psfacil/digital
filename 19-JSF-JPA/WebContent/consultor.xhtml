@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="corpo">
+		<f:loadBundle 
+			basename="br.com.fiap.bundle.consultor" var="c"/>
+		<h1>#{consultorBean.consultor.codigo ==
+			0? adicionar : atualizar }</h1>
+		<h:form>
+			<h:inputHidden value="#{consultorBean.consultor.codigo}" />
+			<h:messages errorClass="alert alert-danger"
+				infoClass="alert alert-success" />
+			<!-- Nome, CPF e Telefone -->
+			<div class="form-group">
+				<h:outputLabel value="#{c.lbl_name}" for="nome" />
+				<h:inputText value="#{consultorBean.consultor.nome}" id="nome"
+					styleClass="form-control" required="true"
+						requiredMessage="Campo obrigatório"
+						validator="#{consultorBean.validarNome}"/>
+				<h:message for="nome" styleClass="text-danger"/>		
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="#{c.lbl_date}" for="dt" />
+				<h:inputText id="dt" styleClass="form-control"
+					value="#{consultorBean.consultor.dataNascimento.time}" >
+					<f:convertDateTime timeZone="GMT-3" pattern="dd/MM/yyyy"/>
+				</h:inputText>					
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="#{c.lbl_cpf}" for="cpf" />
+				<h:inputText value="#{consultorBean.consultor.cpf}" id="cpf"
+					styleClass="form-control" >
+					<f:validateLength maximum="14" minimum="11"/>	
+				</h:inputText>
+				<h:message for="cpf" styleClass="text-danger"/>
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="#{c.lbl_phone}" for="tel" />
+				<h:inputText value="#{consultorBean.consultor.telefone}" id="tel"
+					styleClass="form-control" />
+			</div>
+			<h:commandButton action="#{consultorBean.cadastrar()}" value="#{c.btn_save}"
+				styleClass="btn btn-primary" />
+			<h:link outcome="lista-consultor"
+				rendered="#{consultorBean.consultor.codigo != 0}"
+				styleClass="btn btn-default">#{c.btn_back}</h:link>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>

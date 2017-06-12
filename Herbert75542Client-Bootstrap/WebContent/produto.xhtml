@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:composition template="_template.xhtml">
+	<ui:define name="corpo">
+		<f:loadBundle 
+			basename="br.com.fiap.bundle.consultor" var="p"/>
+		<h1>#{produtoBean.produto.codigo ==
+			0? adicionar : atualizar }</h1>
+		<h:form>
+			<h:inputHidden value="#{produtoBean.produto.codigo}" />
+			<h:messages errorClass="alert alert-danger"
+				infoClass="alert alert-success" />
+			
+			<div class="form-group">
+				<h:outputLabel value="descrição" for="desc" />
+				<h:inputText value="#{produtoBean.produto.descricao}" id="desc"
+					styleClass="form-control" required="true"
+						requiredMessage="Campo obrigatório"
+						validator="#{produtoBean.validarNome}"/>
+				<h:message for="nome" styleClass="text-danger"/>		
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="quantidade" for="qtd" />
+				<h:inputText id="qtd" styleClass="form-control"
+					value="#{produtoBean.produto.quantidade}" >
+					
+				</h:inputText>					
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="valor" for="val" />
+				<h:inputText value="#{produtoBean.produto.valor}" id="val"
+					styleClass="form-control" >
+						
+				</h:inputText>
+				<h:message for="val" styleClass="text-danger"/>
+			</div>
+	
+			<h:commandButton action="#{produtoBean.cadastrar()}" value="salvar"
+				styleClass="btn btn-primary" />
+			<h:link outcome="lista-produto"
+				rendered="##{produtoBean.produto.codigo} != 0}"
+				styleClass="btn btn-default">Voltar</h:link>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
